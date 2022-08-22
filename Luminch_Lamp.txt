@@ -1,0 +1,71 @@
+  int i;
+  int IRpin = 0;
+  int LED = 3;
+
+  int sample[4];
+  int value = 0;
+
+void setup() {
+      pinMode(IRpin,INPUT);
+      pinMode(LED,OUTPUT);
+      Serial.begin(9600);
+}
+
+void loop() {
+     /* i=analogRead(IRpin); 
+     Serial.println(i); */
+     
+    value = 0;
+
+  int j;;
+    for(j=0; j<4; j++)
+    {
+       i = analogRead(IRpin);
+       sample[j] = i;
+       delay(30);
+       
+    }
+
+    for(j=0; j<4; j++)
+    {
+      value += sample[j];
+    }
+    value /= 4;
+    Serial.println(value);
+
+
+    
+    
+  if ((value < 650) && (value >= 500))
+  {
+    analogWrite(LED, 0xFF);
+    delay(500);
+  }
+     
+  else if ((value < 500) && (value >= 400))
+  {
+    analogWrite(LED, 0xC0);
+    delay(500);
+  }
+
+  else if ((value < 400) && (value >= 300))
+  {
+    analogWrite(LED, 0x81);
+    delay(500);
+  }
+
+  else if ((value < 300) && (value >= 200))
+  {
+    analogWrite(LED, 0x42);
+    delay(500);
+  }
+
+  
+  else 
+  {
+    analogWrite(LED, LOW);
+        delay(500);
+  }
+
+}
+
